@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
-const client = require("./database");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+
+const hashPassword = require("./middleware/passwordHash");
+const emailValidation = require("./middleware/emailValidation");
 
 // middlewares
 app.use(bodyParser.json());
@@ -12,14 +14,11 @@ app.get("/", (req, res) => {
   res.send("Home page");
 });
 
-app.post("/signup", async (req, res) => {
+app.post("/signup", emailValidation, async (req, res) => {
   const { email, password } = req.body;
 
+  console.log("[Password]", password);
   res.send(email + " " + password);
-});
-
-app.use((req, res) => {
-  res.status(404).render("404");
 });
 
 // server
