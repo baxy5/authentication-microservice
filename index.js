@@ -1,21 +1,21 @@
 const express = require("express");
 const app = express();
-require("dotenv").config();
 const client = require("./database");
+const bodyParser = require("body-parser");
+require("dotenv").config();
 
-app.set("view engine", "ejs");
+// middlewares
+app.use(bodyParser.json());
 
 // routing
 app.get("/", (req, res) => {
-  res.render("index");
+  res.send("Home page");
 });
 
-app.get("/login", (req, res) => {
-  res.render("login");
-});
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
 
-app.get("/signup", (req, res) => {
-  res.render("signup");
+  res.send(email + " " + password);
 });
 
 app.use((req, res) => {
@@ -25,11 +25,4 @@ app.use((req, res) => {
 // server
 app.listen(8000, () => {
   console.log("Server running on port 8000.");
-  client.connect((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("[PostgreSQL] Database connected.");
-    }
-  });
 });
