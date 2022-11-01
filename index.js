@@ -1,27 +1,23 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const client = require("./database");
 require("dotenv").config();
 
-const hashPassword = require("./middleware/passwordHash");
-const emailValidation = require("./middleware/emailValidation");
-
-// middlewares
 app.use(bodyParser.json());
 
-// routing
+// TODO: Log data via routing
 app.get("/", (req, res) => {
-  res.send("Home page");
+  client.connect();
+
+  client.query("SELECT email, password FROM credentials", (err, data) => {
+    if (err) console.log(err);
+
+    res.send(data.rows);
+    client.end();
+  });
 });
 
-app.post("/signup", emailValidation, async (req, res) => {
-  const { email, password } = req.body;
-
-  console.log("[Password]", password);
-  res.send(email + " " + password);
-});
-
-// server
 app.listen(8000, () => {
   console.log("Server running on port 8000.");
 });
