@@ -1,14 +1,14 @@
 const saveCredentials = require("../services/signup-service");
 
-const postSignup = async (req, res, next) => {
+const postSignup = (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    await saveCredentials(email, password);
-    res.sendStatus(201);
+    saveCredentials(email, password);
+    res.status(201).send("Sign up successful.");
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500);
+    res.status(500).send("Sign up error.");
   }
 };
 

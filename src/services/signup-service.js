@@ -1,8 +1,9 @@
 const client = require("../database/connection");
 
-const saveCredentials = async (email, password) => {
+const saveCredentials = (email, password) => {
+  client.connect();
   client.query(
-    `INSERT INTO credentials (email,password) VALUES (${email}, ${password})`,
+    `INSERT INTO credentials (email,password) VALUES ('${email}', '${password}')`,
     (err, res) => {
       if (err) console.log(err);
 
