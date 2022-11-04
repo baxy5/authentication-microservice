@@ -13,7 +13,7 @@ app.use("/api", signup);
 app.use("/api", login);
 
 app.get("/", (req, res, next) => {
-  res.send("Authentication & authorization Microservice");
+  res.send("Auth Micorservice");
 });
 
 app.listen(8005, () => {
