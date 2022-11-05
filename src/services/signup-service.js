@@ -1,13 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const bycrpt = require("bcrypt");
 
 const createUser = async (email, password) => {
   //TODO: check if email is valid
-  //TODO: bycrpt password
+  const hashedPassword = bycrpt.hashSync(password, 10);
+
   await prisma.users.create({
     data: {
       email: email,
-      password: password,
+      password: hashedPassword,
     },
   });
 };
