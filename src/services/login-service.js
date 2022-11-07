@@ -12,15 +12,15 @@ const logIn = async (email, password) => {
   if (user.length == 0) {
     await prisma.$disconnect();
     console.log("[SERVICE]: User not found.");
-    return false;
+    return 1;
   } else {
     const isMatch = await bycrpt.compare(password, user[0].password);
     if (isMatch) {
       console.log("[SERVICE]: Logged in.");
-      return true;
+      return 0;
     } else {
       console.log("[SERVICE]: Wrong password.");
-      return false;
+      return 2;
     }
   }
 };
