@@ -1,7 +1,7 @@
 const createUser = require("../services/signup-service");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const validateEmail = require("../utils/validateEmail");
+const validateEmail = require("../utils/validate-email");
 
 const signupController = async (req, res, next) => {
   const { email, password } = req.body;
