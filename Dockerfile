@@ -1,5 +1,14 @@
-FROM node:16
+FROM node:latest
 WORKDIR /app
 
-ENV 
+COPY package*.json ./
+COPY prisma ./prisma/
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 8005
+
+CMD [ "npm", "start" ]
 
